@@ -57,7 +57,8 @@ export default function SpecificTask({ params: { id } }: { params: { id: string 
         const refresh = await res.wait();
         setReceipt(refresh)
       } catch (e:any) {
-        const err = e.data.message.split(':')[1].slice(8).trim()
+        console.log(e)
+        const err = e.toString().split('reverted')[1].slice(2).trim().split(`"`)[0]
         console.log(err)
         setError(err)
       }
