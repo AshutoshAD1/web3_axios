@@ -13,7 +13,6 @@ export default function CreateForm() {
   const [creating, setCreating] = useState(false);
   const [refresh, setRefresh] = useState<string | null>(null);
 
-  console.log(contract)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formDat, [name]: value });
@@ -70,6 +69,7 @@ export default function CreateForm() {
       if (imgHash.length > 0 && contract) {
         try {
           const contractSigner = contract.connect(signer);
+          
           const createTaskTx = await contractSigner.createTask(formDat.title, imgHash, BigInt(formDat.targetVotes));
           const receipt = await createTaskTx.wait();
           console.log(receipt);
