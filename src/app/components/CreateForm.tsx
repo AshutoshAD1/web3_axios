@@ -110,13 +110,22 @@ export default function CreateForm() {
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Images</label>
-            <input required
+            {/* <input required
               directory=""
               webkitdirectory=""
               type="file"
               onChange={changeHandler}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
+            /> */}
+                <input
+      required
+      directory="" // Type assertion to bypass TypeScript error
+      webkitdirectory="" // Type assertion to bypass TypeScript error
+      type="file"
+      onChange={changeHandler}
+      className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+      {...({ directory: '', webkitdirectory: '' } as any)} // Type assertion to bypass TypeScript error
+    />
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Target Votes</label>

@@ -12,7 +12,7 @@ const NavBar = () => {
   const connectWallet=async ()=>{
     
     try{
-       const accounts=await window.ethereum.request({method:"eth_requestAccounts"});
+       const accounts:any=await window.ethereum.request({method:"eth_requestAccounts"});
        setAccount(accounts[0]);
        localStorage.setItem('address',accounts[0]);
        setConnected(prev=>true);
@@ -30,13 +30,14 @@ const NavBar = () => {
   console.log(connected)
   useEffect(()=>{
     const changedAccount=()=>{
+
+        window.ethereum.on('accountsChanged',async (accounts:string[])=>{
+          if(accounts.length>0){
+            console.log(accounts)
+            setAccount(accounts[0]);
+          }
+        })
       
-      window.ethereum.on('accountsChanged',async (accounts:string[])=>{
-        if(accounts.length>0){
-          console.log(accounts)
-          setAccount(accounts[0]);
-        }
-      })
     } 
     changedAccount();
     if(localStorage.getItem('address')!=null){
@@ -45,7 +46,7 @@ const NavBar = () => {
   },[])
   const disConnectWallet=()=>{
     localStorage.removeItem('address');
-    dispatch({type:'RESET_CONTRACT'})
+    dispatch({type:'RESET_CONTRACT',payload:{  contract: null, signer: null, address: ''}})
     setAccount(null)
     setConnected(prev=>false)
   }
