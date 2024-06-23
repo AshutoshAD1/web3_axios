@@ -77,11 +77,11 @@ export default function CreateForm() {
             console.log(receipt);
             setRefresh(receipt);
           }
-        } catch (e) {
+        } catch (e:any) {
           console.error(e);
         }
       }
-    } catch (error) {
+    } catch (error:any) {
       console.error(error);
     } finally {
       setCreating(false);

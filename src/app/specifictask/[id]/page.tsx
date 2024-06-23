@@ -23,7 +23,7 @@ export default function SpecificTask({ params: { id } }: { params: { id: string 
   const creator = searchParams.get('creator')
 
   const getSpecificTask = async () => {
-    if (contract) {
+    if (contract && signer) {
       const contractSigner = contract.connect(signer)
       const task = await contractSigner.getSpecificTask(creator, id);
       setImgs(task.img)
@@ -42,7 +42,7 @@ export default function SpecificTask({ params: { id } }: { params: { id: string 
   }, [isCompleted]);
 
   const getWinner = async () => {
-    if (contract) {
+    if (contract && signer) {
       const contractSigner = contract.connect(signer)
       const winner = await contractSigner.getWinner(creator, BigInt(id));
       setWinner(winner)
@@ -50,13 +50,13 @@ export default function SpecificTask({ params: { id } }: { params: { id: string 
   }
 
   const voteImg = async (idx: number) => {
-    if (contract) {
+    if (contract && signer)  {
       try {
         const contractSigner = contract.connect(signer)
         const res = await contractSigner.voteTaskImg(creator, BigInt(id), BigInt(idx));
         const refresh = await res.wait();
         setReceipt(refresh)
-      } catch (e) {
+      } catch (e:any) {
         const err = e.data.message.split(':')[1].slice(8).trim()
         console.log(err)
         setError(err)

@@ -48,7 +48,7 @@ const Page = () => {
       tasks.forEach(task => {
         checkTaskCompletion(contract, task.creator, task.id)
           .then(res => setCompletedTasks(prevState => new Map(prevState).set(`${task.creator}-${Number(task.id)}`, res)))
-          .catch(e => console.log(e));
+          .catch((e:any) => console.log(e));
         getYouVoted(task.creator, task.id);
       });
     }

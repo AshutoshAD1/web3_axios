@@ -22,7 +22,7 @@ const NavBar = () => {
        const contract=new ethers.Contract('0x9d3e423ab912541d84b12bd9fcb93cd2af283d5a',abi,signer)
        dispatch({type:"SET_CONTRACT",payload:{contract,signer,address:accounts[0]}})
       }
-    catch(e){
+    catch(e:any){
       setConnected(false)
       console.log(e)
     }
