@@ -68,12 +68,15 @@ export default function CreateForm() {
       // Step 2: Create task with image hashes on the blockchain
       if (imgHash.length > 0 && contract) {
         try {
-          const contractSigner = contract.connect(signer);
-          
-          const createTaskTx = await contractSigner.createTask(formDat.title, imgHash, BigInt(formDat.targetVotes));
-          const receipt = await createTaskTx.wait();
-          console.log(receipt);
-          setRefresh(receipt);
+          if(contract && signer){
+
+            const contractSigner = contract.connect(signer);
+            
+            const createTaskTx = await contractSigner.createTask(formDat.title, imgHash, BigInt(formDat.targetVotes));
+            const receipt = await createTaskTx.wait();
+            console.log(receipt);
+            setRefresh(receipt);
+          }
         } catch (e) {
           console.error(e);
         }

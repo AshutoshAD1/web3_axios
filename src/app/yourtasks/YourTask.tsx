@@ -19,7 +19,7 @@ const YourTask = () => {
   const [connectMetaMask, setConnectMetaMask] = useState(false);
 
   const getYourTasks = async () => {
-    if (contract) {
+    if (contract && signer) {
       setConnectMetaMask(false);
       const contractSigner = contract.connect(signer);
       const tasks = await contractSigner.getYourTasks();

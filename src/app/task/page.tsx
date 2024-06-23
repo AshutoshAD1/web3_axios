@@ -4,11 +4,14 @@ import { useContract } from "@/context/useContract"
 import NavBar from "../components/NavBar"
 
 export default function Page(){
-  const {contract_and_web3}=useContract()
+  const {contract_and_web3}=useContract();
+  const {contract}=contract_and_web3;
   console.log(contract_and_web3)
   const getAllTasks=async ()=>{
-    const tasks = await contract_and_web3.contract.getAllTasks();
-    console.log(tasks)
+    if(contract){
+
+      const tasks = await contract.getAllTasks();
+    }
 
   }
   return  <>
