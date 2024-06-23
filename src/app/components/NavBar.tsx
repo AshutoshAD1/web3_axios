@@ -31,12 +31,18 @@ const NavBar = () => {
   useEffect(()=>{
     const changedAccount=()=>{
 
-        window.ethereum.on('accountsChanged',async (accounts:string[])=>{
-          if(accounts.length>0){
-            console.log(accounts)
+        // window.ethereum.on('accountsChanged',async (accounts:string[])=>{
+        //   if(accounts.length>0){
+        //     console.log(accounts)
+        //     setAccount(accounts[0]);
+        //   }
+        // })
+        (window.ethereum as any)?.on('accountsChanged', async (accounts: string[]) => {
+          if (accounts.length > 0) {
+            console.log(accounts);
             setAccount(accounts[0]);
           }
-        })
+        });
       
     } 
     changedAccount();
