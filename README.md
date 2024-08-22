@@ -7,7 +7,7 @@
 
 ## Overview
 
-### The VotingImgs smart contract allows users to create tasks where multiple images compete for votes. Users can vote on their favorite images within a task, and once the target number of votes is reached, the task is marked as completed, and the winning image can be determined.
+#### The VotingImgs smart contract allows users to create tasks where multiple images compete for votes. Users can vote on their favorite images within a task, and once the target number of votes is reached, the task is marked as completed, and the winning image can be determined.
 
 ### Contract Structure
 
