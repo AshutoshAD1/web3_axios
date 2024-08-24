@@ -1,5 +1,10 @@
 # VotingImgs Smart Contract
 
+## Blockchain used - Ethereum
+
+-> Contract Address - 0x9d3e423ab912541d84b12bd9fcb93cd2af283d5a
+-> To view verified contract go to sepolia.etherscan.io and put this contract address
+
 ## Overview
 
 ### The VotingImgs smart contract allows users to create tasks where multiple images compete for votes. Users can vote on their favorite images within a task, and once the target number of votes is reached, the task is marked as completed, and the winning image can be determined.
@@ -31,7 +36,7 @@
 3. State Variables
    > allTasks: An array of AllTasks structs that holds a summary of all created tasks across all users.
 
-Functions Overview
+### Functions Overview
 
 1. createTask(string calldata \_title, string[] calldata imgs, uint256 \_targetVotes)
 
