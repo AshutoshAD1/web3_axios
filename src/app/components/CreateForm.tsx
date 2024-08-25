@@ -33,7 +33,6 @@ export default function CreateForm() {
 
     setCreating(true);
     try {
-      // Step 1: Upload images to IPFS
       const formData = new FormData();
       Array.from(selectedFile).forEach((file) => {
         formData.append("file", file);
@@ -60,12 +59,10 @@ export default function CreateForm() {
       );
       const resData = await res.json();
 
-      // Extract IPFS hashes from response
       const imgHash: string[] = resData.IpfsHash ? Array.from(selectedFile).map((file: any, idx) => resData.IpfsHash + `/${file.name}`) : [];
       setImgHsh(imgHash);
       console.log(imgHash)
 
-      // Step 2: Create task with image hashes on the blockchain
       if (imgHash.length > 0 && contract) {
         try {
           if(contract && signer){
