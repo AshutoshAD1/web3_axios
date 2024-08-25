@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import NavBar from "../components/NavBar";
 import { checkTaskCompletion } from "../utils/checkingCompletion";
+import { setRequestMeta } from "next/dist/server/request-meta";
+import { LogDescription } from "ethers/lib/utils";
 
 type Tasks = {
   title: string;
@@ -16,7 +18,8 @@ type Tasks = {
 const Page = () => {
   const { contract_and_web3 } = useContract();
   const { contract, address } = contract_and_web3;
-  const [tasks, setTasks] = useState<Tasks[]>([]);
+  const [error,setError]=useState<string| null>(null)
+  const [tasks, setTasks] = useState<Tasks[] >([]);
   const [connectMetaMask, setConnectToMetaMask] = useState(false);
   const [completedTasks, setCompletedTasks] = useState<Map<string, boolean>>(new Map());
   const [youCompletedTask, setYouCompletedTask] = useState<Map<string, boolean>>(new Map());
@@ -44,7 +47,8 @@ const Page = () => {
   }, [contract]);
 
   useEffect(() => {
-    if (tasks.length > 0) {
+    if (tasks.length>0) {
+      console.log("object")
       tasks.forEach(task => {
         checkTaskCompletion(contract, task.creator, task.id)
           .then(res => setCompletedTasks(prevState => new Map(prevState).set(`${task.creator}-${Number(task.id)}`, res)))
@@ -52,7 +56,11 @@ const Page = () => {
         getYouVoted(task.creator, task.id);
       });
     }
+  
+    
   }, [tasks]);
+
+
 
   const getYouVoted = async (creator: string, idx: number) => {
     if (contract && address) {
@@ -67,23 +75,25 @@ const Page = () => {
       {connectMetaMask ? (
         <p>Connect to MetaMask</p>
       ) : (
-        <>
+        <div className="flex w-full h-[90vh] justify-center items-center">
           {loading ? (
             <p>Loading tasks...</p>
-          ) : tasks.length > 0 ? (
+          ) : error!==null?<p>{error}</p>: (
+
             tasks.map(task => (
               <ul key={task.id}>
                 {youCompletedTask.has(`${task.creator}-${task.id}`) && !youCompletedTask.get(`${task.creator}-${task.id}`) && !completedTasks.get(`${task.creator}-${task.id}`) ? (
                   <Link href={{ pathname: `/specifictask/${task.id.toString()}`, query: { creator: task.creator } }}>
-                    <p>{task.title}</p>
+                    <div className="flex flex-col">
+                    <p>Click below to vote the task</p>
+                    <button className="bg-green-400 mt-2 rounded-md font-semibold">{task.title}</button>
+                    </div>
                   </Link>
-                ) : null}
+                ) : null }
               </ul>
             ))
-          ) : (
-            <p>No tasks</p>
-          )}
-        </>
+          ) }
+        </div>
       )}
     </div>
   );
